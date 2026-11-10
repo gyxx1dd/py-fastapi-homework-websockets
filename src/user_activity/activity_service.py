@@ -53,10 +53,10 @@ class UserActivityService(UserActivityServiceInterface):
         auth_message = None
 
         try:
-            auth_message = asyncio.wait_for(
+            auth_message = await asyncio.wait_for(
                 websocket.receive_json(), timeout=30
             )
-        except asyncio.TimeoutError:
+        except (asyncio.TimeoutError, ValueError):
             await websocket.close(code=status.WS_1008_POLICY_VIOLATION, reason="Auth timeout")
             return
 
