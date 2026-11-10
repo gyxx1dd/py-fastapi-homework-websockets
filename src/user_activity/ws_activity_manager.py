@@ -31,8 +31,10 @@ class UserActivityWebSocketManager(UserActivityWebSocketManagerInterface):
         else:
             res = [websocket]
             self.active_connections[user_data.user_id] = res
-            await self._broadcast({"event": "user_connected", "user": user_data.model_dump(mode="json")}, exclude=user_data.user_id)
-
+            await self._broadcast(
+                {"event": "user_connected",
+                 "user": user_data.model_dump(mode="json")},
+                exclude=user_data.user_id)
 
     async def disconnect(self, user_id: int, websocket: WebSocket) -> None:
         """

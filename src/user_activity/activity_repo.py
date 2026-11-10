@@ -62,15 +62,13 @@ class UserActivityRepository(UserActivityRepoInterface):
         await collection.update_one(
             {"user_id": user_id},
             {"$set":
-                model_data
-            },
+                model_data},
             upsert=True
         )
         result = await collection.find_one({"user_id": user_id}, {"_id": 0})
         return UserActivitySchema.model_validate(
             result
         )
-
 
     async def get_all_active_users(self) -> List[UserActivitySchema]:
         """
